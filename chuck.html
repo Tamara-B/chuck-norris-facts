@@ -18,11 +18,12 @@
     <body>
         <section class="section">
             <div class="container">
-            <h1 class="title">Chuck Norris Jokes</h1>
-            <p>Reload for another joke!</p>
+                <h1 class="title">Chuck Norris Jokes</h1>
+                <p>Reload for another joke!</p>
 
-            <div class="content" id="chuck-norris">
-            </div>
+                <div class="content" id="chuck-norris">
+                </div>
+                <button type="button" id="myBtn">Generate a new one!</button>
             </div>
 
         </section>
@@ -34,7 +35,29 @@
             crossorigin="anonymous">
         </script>
         <script>
+            
+            function fetchChuckNorrisFact() {
 
+                const url = `https://api.chucknorris.io/jokes/random`;
+                axios.get(url)
+                    .then(response => response.data) 
+                    .then(fact => {
+                        console.log('data decoded from JSON:', fact);
+
+                        const CNFactHtml = `
+                            <img src="${fact.icon_url}" />    
+                            <p>${fact.value}</p>
+                        `;
+                        document.querySelector('#chuck-norris').innerHTML = CNFactHtml;
+                    });
+            }
+
+            fetchChuckNorrisFact();
+
+            document.getElementById("myBtn").addEventListener("click", function(){
+                document.getElementById("chuck-norris").innerHTML = fetchChuckNorrisFact();
+            });
+            
         </script>
     </body>
 
